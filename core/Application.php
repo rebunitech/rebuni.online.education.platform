@@ -19,7 +19,7 @@ class Application
 	public Controller $controller;
 	public Database $db;
 	public Session $session;
-
+	
 	public function __construct($rootPath, array $config){
 
 		self::$ROOT_DIR = $rootPath;
@@ -42,6 +42,15 @@ class Application
 	}
 	public function run(){
 		echo $this->router->resolve();
+	}
+	public function getUserType()
+	{
+		return $this->session->getAuthSession("user_type");
+	}
+
+	public function getUesrId()
+	{
+		return $this->session->getAuthSession("user_id");
 	}
 }
 ?>

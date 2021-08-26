@@ -7,10 +7,11 @@ use app\core\Controller;
 use app\core\Request;
 use app\models\User;
 use app\models\LoginUser;
+use app\core\Response;
 
 class AuthController extends Controller
 {
-	public function login(Request $request)
+	public function login(Request $request, Response $response)
 	{
 		$user = new LoginUser();
 		if ($request->isPost()) {
@@ -19,12 +20,13 @@ class AuthController extends Controller
 				$user->login();
 				Application::$app->session->setFlash('success', "Login successfull!");
 				if ($user_type === 'school'){
-					Application::$app->response->redirect('/school');
+					$response->redirect('/school');
 				} else if ($user_type === 'teacher'){
-					Application::$app->response->redirect('/teacher');
+					$response->redirect('/teacher');
 				} else if ($user_type === 'teacher'){
-					Application::$app->response->redirect('/student');
+					$response->redirect('/student');
 				}
+				exit;
 			}
 		}
 		$this->setLayout('auth');
@@ -33,24 +35,24 @@ class AuthController extends Controller
 		]);
 	}
 
-	public function logout(Request $request)
+	public function logout(Request $request, Response $response)
 	{
 		Application::$app->session->destroyAuthSession();
 		Application::$app->session->setFlash('success', "Logout successfull!");
-		Application::$app->response->redirect('/login');
+		$response->redirect('/login');
 	}
 
-	public function register(Request $request)
+	public function register(Request $request, Response $response)
 	{
 		$user = new User();
 		if ($request->isPost()) {
 			$user->loadData($request->getBody());
 			if ($user->validate() && $user->save()){
 				Application::$app->session->setFlash('success', "Registeration successfull!");
-				Application::$app->response->redirect('/login');
+				$response->redirect('/login');
 			}
 		}
-		$this->setLayout('register');
+		$this->setLayout('auth');
 		return $this->render('register', [
 			'model' => $user
 		]);

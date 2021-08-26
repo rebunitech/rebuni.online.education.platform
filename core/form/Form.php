@@ -8,7 +8,7 @@ class Form
 {
 	public static function begin(string $action, string $method)
 	{
-		echo sprintf('<form action="%s"  method="%s" class="needs-validation">', $action, $method);
+		echo sprintf('<form action="%s"  method="%s" role="form">', $action, $method);
 		return new Form();
 	}
 

@@ -10,7 +10,6 @@ class Session
 	{
 		session_start();
 		$flashMessages = $_SESSION[self::FLASH_MESSAGES] ?? [];
-		$_SESSION[self::AUTH_SESSION]['is_authenticated'] = false;
 		foreach ($flashMessages  as &$flashMessage) {
 			$flashMessage['removed'] = true;
 		}
@@ -33,6 +32,10 @@ class Session
 	public function setAuthSession($key, $value)
 	{
 		$_SESSION[self::AUTH_SESSION][$key] = $value;
+	}
+	public function getAuthSession(string $key)
+	{	
+		return $_SESSION[self::AUTH_SESSION][$key];
 	}
 
 	public function destroyAuthSession()

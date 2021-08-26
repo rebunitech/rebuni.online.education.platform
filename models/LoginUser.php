@@ -3,13 +3,14 @@
 namespace app\models;
 
 use app\core\DBModel;
-
+use app\core\Application;
 
 class LoginUser extends DBModel
 {
 
 	public string $username = '';
 	public string $password = '';
+	public string $user_type = '';
 	public int $user_id;
 	
 	public function tableName(): string
@@ -46,20 +47,25 @@ class LoginUser extends DBModel
 		if ($user) {
 			if(password_verify($this->password, $user->password)){
 				$this->user_id = $user->id;
-				return $user->user_type ?? false;
+				$this->user_type = $user->user_type;
+				return $this->user_type ?? false;
 			} else {
-				$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);
+				$this->addError('__non_field_error', self::RULE_INVALID, ["field" => "username and/or password"]);
 			}
 		} else {
-			$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);	
+			$this->addError('__non_field_error', self::RULE_INVALID, ["field" => "username and/or password"]);	
 		}
 	
 	}
 
 	public function login()
 	{
+		Application::$app->session->setAuthSession('user_type', $this->user_type);
 		Application::$app->session->setAuthSession('user_id', $this->user_id);
 	}
 }
+
+
+
 
 ?>

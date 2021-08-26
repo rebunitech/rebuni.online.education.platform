@@ -10,7 +10,7 @@ class rm003_create_table_schools
 				    `name` VARCHAR(200) NOT NULL,
 				    `email` VARCHAR(200) NOT NULL,
 				    `phone_number` VARCHAR(15),
-				    `p_o_box` INT(5),
+				    `p_o_box` VARCHAR(25),
 				    `region` VARCHAR(200),
 				    `state`  VARCHAR(200),
 				    `is_open` BOOLEAN DEFAULT 0 NOT NULL,

@@ -25,11 +25,11 @@ abstract class DBModel extends Model
 		return true;
 	}
 
-	public function findOne($where)
+	public static function findOne($where)
 	{
 		$tableName = static::tableName();
 		$attributes = array_keys($where);
-		$sql = implode(" AND ", array_map(fn($attr) => ":$attr = $attr", $attributes));
+		$sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
 		$stmt = self::prepare("SELECT * FROM $tableName WHERE $sql;");
 		foreach ($where as $key => $value){
 			$stmt->bindValue(":$key", $value);
@@ -38,8 +38,24 @@ abstract class DBModel extends Model
 		return $stmt->fetchObject(static::class);
 	}
 	
+	public function load($data)
+	{
+		foreach ($data as $key => $value){
+			if (property_exists($this, $key)) {
+				$this->{$key} = $value;
+			}
+		}
+	}
+	public static function loadRelated($relationTable, $relations)
+	{	
+		$sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", array_keys($relations)));
+		$stmt = self::prepare("SELECT * FROM $relationTable WHERE $sql;");
+		$stmt->execute($relations);
+		return $stmt->fetch();
+	}
 	public static function prepare($sql)
 	{
+
 		return 	Application::$app->db->pdo->prepare($sql);
 	}
 }
