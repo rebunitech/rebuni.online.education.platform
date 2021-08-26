@@ -10,9 +10,12 @@ abstract class Model
 	public const RULE_MAX = 'max';
 	public const RULE_MATCH = 'match';
 	public const RULE_UNIQUE = 'unique';
+	public const RULE_NUMERIC = 'numeric';
 	public const RULE_INVALID = 'invalid';
 
 	public array $errors = [];
+	
+	abstract public function rules();
 
 	public function loadData($data)
 	{
@@ -23,7 +26,6 @@ abstract class Model
 		}
 	}
 
-	abstract public function rules();
 	public function labels(): array
 	{
 		return [];
@@ -65,6 +67,9 @@ abstract class Model
 				{
 					$this->addError($attribute, self::RULE_MATCH, ['match' => $this->getLabel($rule['match'])]);	
 				}
+				if ($ruleName === self::RULE_NUMERIC && ctype_digit($value)){
+					$this->addError($attribute, self::RULE_NUMERIC, ['field' => $this->getLabel($attribute)]);
+				}
 				if ($ruleName === self::RULE_UNIQUE){
 					$className = $rule['class'];
 					$uniqueAttribute = $ruel['attribute'] ?? $attribute;
@@ -103,6 +108,7 @@ abstract class Model
 			self::RULE_MATCH => 'This field must be the same as {match}',
 			self::RULE_UNIQUE => 'Record with this {field} already exist',
 			self::RULE_INVALID => 'Invalid {field}',
+			self::RULE_NUMERIC => '{field} cannot be entirlly numeric.',
 		];
 	}
 

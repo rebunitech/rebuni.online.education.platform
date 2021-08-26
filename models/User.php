@@ -41,10 +41,11 @@ class User extends DBModel
 			'first_name' => [self::RULE_REQUIRED],
 			'last_name' => [self::RULE_REQUIRED],
 			'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'class' => self::class]],
-			'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
+			'password' => [self::RULE_REQUIRED, self::RULE_NUMERIC, [self::RULE_MIN, 'min' => 8]],
 			'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
 			'username' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'class' => self::class]],
 			'user_type' => [self::RULE_REQUIRED],
+
 		];
 	}
 

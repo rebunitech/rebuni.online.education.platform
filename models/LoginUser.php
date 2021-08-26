@@ -2,9 +2,10 @@
 
 namespace app\models;
 
-use app\core\Application;
+use app\core\DBModel;
 
-class LoginUser extends User
+
+class LoginUser extends DBModel
 {
 
 	public string $username = '';
@@ -40,29 +41,19 @@ class LoginUser extends User
 
 	public function authenticate()
 	{
-		$tableName = $this->tableName();
-		$username = $this->username;
-		$password = $this->password;
 
-		$stmt = $this->prepare("SELECT id, password, user_type FROM $tableName WHERE username=:uname;");
-		$stmt->bindValue(":uname", $username);
-		if ($stmt->execute()){
-			$user = $stmt->fetchObject();
-			if ($user) {
-				$user_id = $user->id;
-				$password_hashed = $user->password;
-				if(password_verify($password, $password_hashed)){
-					$this->user_id = $user_id;
-					return $user->user_type ?? false;
-				} else {
-					$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);
-				}
+		$user = self::findOne(["username" => $this->username], ['id', 'password']);
+		if ($user) {
+			if(password_verify($this->password, $user->password)){
+				$this->user_id = $user->id;
+				return $user->user_type ?? false;
 			} else {
-				$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);	
+				$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);
 			}
 		} else {
-			$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);
+			$this->addError('username', self::RULE_INVALID, ["field" => "username and/or password"]);	
 		}
+	
 	}
 
 	public function login()

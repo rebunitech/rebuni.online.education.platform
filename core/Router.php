@@ -35,7 +35,6 @@ class Router
  	
 
 		if ($callback === false) {
-			Application::$app->controller = new Controller();
 			$this->response->setStatusCode(404);
 			return $this->renderView("_404");
 		}
@@ -62,7 +61,7 @@ class Router
 
 	protected function layoutContent()
 	{
-		$layout = Application::$app->controller->layout;
+		$layout = Application::$app->controller->layout ?? 'main';
 		ob_start();
 		include_once Application::$ROOT_DIR."/views/layouts/$layout.php";	
 		return ob_get_clean();
