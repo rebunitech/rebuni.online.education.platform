@@ -19,6 +19,7 @@ class rm001_initial
 				    `p_o_box` INT(5),
 				    `region` VARCHAR(200),
 				    `state`  VARCHAR(200),
+				    `user_type` VARCHAR(10),
 				    `date_registerd` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 				) ENGINE=INNODB;";
 		$db->pdo->exec($SQL);	

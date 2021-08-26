@@ -1,21 +1,17 @@
-<form>
-<img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-<div class="form-floating">
-  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-  <label for="floatingInput">Email address</label>
+<?php use app\core\form\Field; use app\core\form\Form; ?>
+<div class="container mt-5" style="text-align: left;">
+	<div class="card mx-auto" style="width:  100%;">
+	  <div class="card-header text-center">
+	  		<h2 class="text-muted">Login</h2>
+	  </div>
+	<?php $form = Form::begin("", "post"); ?>
+		<?php echo $form->field($model, 'username'); ?>
+		<?php echo $form->field($model, 'password', Field::TYPE_PASSWORD); ?>
+
+		<button  class="btn btn-primary" type="submit">Login</button>
+		<a href="/register">Need an account?</a>
+	<?php echo Form::end(); ?>
 </div>
-<div class="form-floating">
-  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-  <label for="floatingPassword">Password</label>
 </div>
 
-<div class="checkbox mb-3">
-  <label>
-    <input type="checkbox" value="remember-me"> Remember me
-  </label>
-</div>
-<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-<a href="/register" class="text-muted">Already have account?</a>
-</form>

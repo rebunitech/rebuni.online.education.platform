@@ -24,16 +24,18 @@ class Field
 	public function __toString()
 	{
 		return sprintf('
-			<div>
-				<div>%s</div>
-				<div><input type="%s" name="%s" value="%s" class="form-control %s" /> 
-				<div class="error">%s</div>
-			</div>
-			', $this->model->getLabel($this->attribute),
+			  <div class="m-3">
+				<label for="id_%s" class="form-label m-2">%s</label>
+			    <input type="%s" name="%s" class="form-control" id="id_%s" value="%s">
+			    <div class="text-danger m-2">%s</div>
+			  </div>
+			', 
+			   $this->attribute,
+			   $this->model->getLabel($this->attribute),
 			   $this->type,
 			   $this->attribute,
+			   $this->attribute,
 			   $this->model->{$this->attribute},
-			   $this->model->hasError($this->attribute) ? 'invalid' : '',
 			   $this->model->getFirstError($this->attribute)
 			);	
 	}

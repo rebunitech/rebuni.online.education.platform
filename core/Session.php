@@ -4,11 +4,13 @@ namespace app\core;
 class Session
 {
 	protected const FLASH_MESSAGES = 'flash_messages';
+	protected const AUTH_SESSION = 'auth_session';
 
 	public function __construct()
 	{
 		session_start();
 		$flashMessages = $_SESSION[self::FLASH_MESSAGES] ?? [];
+		$_SESSION[self::AUTH_SESSION]['is_authenticated'] = false;
 		foreach ($flashMessages  as &$flashMessage) {
 			$flashMessage['removed'] = true;
 		}
@@ -25,6 +27,22 @@ class Session
 	public function getFlash($key)
 	{
 		return $_SESSION[self::FLASH_MESSAGES][$key]['value'] ?? false;
+	}
+
+
+	public function setAuthSession($key, $value)
+	{
+		$_SESSION[self::AUTH_SESSION][$key] = $value;
+	}
+
+	public function destroyAuthSession()
+	{
+		unset($_SESSION[self::AUTH_SESSION]['user_id']);
+	}
+
+	public function isAuthenticated()
+	{
+		return $_SESSION[self::AUTH_SESSION]['user_id'] ?? false;
 	}
 
 	public function __destruct()
