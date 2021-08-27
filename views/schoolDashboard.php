@@ -122,9 +122,9 @@
                                     <?php echo $join_request['lecture_fk'] ?>
                                 </td>
                                 <td>
-                                    <?php if ($join_request['stauts'] == 0) : ?>
+                                    <?php if ($join_request['status'] == 0) : ?>
                                         PENDING
-                                    <?php elseif ($join_request['stauts'] == 1) : ?>
+                                    <?php elseif ($join_request['status'] == 1) : ?>
                                         ACCEPTED
                                     <?php else : ?>
                                         DENIED

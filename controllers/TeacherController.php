@@ -18,7 +18,7 @@ class TeacherController extends Controller
         $data = Teacher::findOne(["id" => $user_id, 'user_type' => 'teacher']);
         $courses = Teacher::loadRelated("course_lecture", ["lecture_fk" => $user_id]);
         $followers = Teacher::loadRelated("followers", ["following_fk" => $user_id]);
-        $schools = Teacher::loadRelated("join_requests", ["lecture_fk" => $user_id, 'stauts' => 1]);
+        $schools = Teacher::loadRelated("join_requests", ["lecture_fk" => $user_id, 'status' => 1]);
         $stmt = Teacher::prepare("SELECT * FROM join_requests as j INNER JOIN schools as s ON j.school_fk = s.user_fk WHERE j.lecture_fk = $user_id");
         $stmt->execute();
         $join_requests = $stmt->fetchAll(PDO::FETCH_ASSOC);

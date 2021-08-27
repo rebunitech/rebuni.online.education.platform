@@ -13,7 +13,6 @@ class RegisterUser extends DBModel
 	public string $password = '';
 	public string $passwordConfirm = '';
 	public string $user_type = '';
-	public string $payment_id = '';
 
 	public function tableName(): string
 	{
@@ -22,7 +21,7 @@ class RegisterUser extends DBModel
 
 	public function attributes(): array
 	{
-		return ['first_name', 'last_name', 'email', 'password', 'username', 'user_type', 'payment_id'];
+		return ['first_name', 'last_name', 'email', 'password', 'username', 'user_type'];
 	}
 
 	public function labels(): array
@@ -34,7 +33,6 @@ class RegisterUser extends DBModel
 			'username' => 'Username',
 			'password' => 'Password',
 			'passwordConfirm' => 'Confirm password',
-			'payment_id' => 'Payment ID',
 		];
 	}
 	public function rules()
@@ -42,7 +40,6 @@ class RegisterUser extends DBModel
 		return [
 			'first_name' => [self::RULE_REQUIRED],
 			'last_name' => [self::RULE_REQUIRED],
-			'payment_id' => [self::RULE_REQUIRED],
 			'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'class' => self::class]],
 			'password' => [self::RULE_REQUIRED, self::RULE_NUMERIC, [self::RULE_MIN, 'min' => 8]],
 			'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],

@@ -11,7 +11,7 @@ class Course extends DBModel
     public int $school_fk;
     public string $title = '';
     public ?string $description = '';
-    public int $is_paid = 0;
+    public $is_paid = 0;
     public ?float $price = 0.0;
 
     public function tableName(): string
@@ -58,9 +58,12 @@ class Course extends DBModel
     public function save($extra_attribute = [])
 	{
 		$this->school_fk = Application::$app->getUesrId();
-        echo var_dump($this).PHP_EOL;
-        $this->is_paid = $this->is_paid ?? 0;
-        echo var_dump($this);
+        if ($this->is_paid == 'on'){
+            $this->is_paid = 1;
+        } else {
+            $this->is_paid = 0;
+        }
+
 		return parent::save($extra_attribute);
 	}
 

@@ -34,7 +34,7 @@ $app->router->get('/dashboard', [SiteController::class, 'dashboard']);
 $app->router->get('/profile', [SiteController::class, 'profile']);
 $app->router->get('/school', [SchoolController::class, 'dashborad']);
 $app->router->get('/addschool', [SchoolController::class, 'addSchool']);
-$app->router->get('/addschool', [SchoolController::class, 'addSchool']);
+$app->router->post('/addschool', [SchoolController::class, 'addSchool']);
 $app->router->get('/schoolprofile', [SchoolController::class, 'profile']);
 $app->router->post('/schoolprofile', [SchoolController::class, 'profile']);
 $app->router->get('/openrequest', [SchoolController::class, 'openRequest']);

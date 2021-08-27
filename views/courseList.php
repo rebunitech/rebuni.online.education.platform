@@ -25,7 +25,6 @@
                             <th scope="col" class="sort" data-sort="budget">Description</th>
                             <th scope="col" class="sort" data-sort="budget">Price</th>
                             <th scope="col" class="sort" data-sort="status">Date create</th>
-                            <th scope="col" class="sort" data-sort="status">Action</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -45,7 +44,7 @@
                                     <?php echo $course['price']; ?>
                                 </td>
                                 <td>
-                                    <?php echo $course['date_created']; ?>
+                                    <?php echo $course['date_create']; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
