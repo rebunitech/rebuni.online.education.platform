@@ -47,17 +47,18 @@ class CourseController extends Controller
         $user_id = Application::$app->getUesrId();
         if (isset($request->getBody()['courseID'])){
             $courseID = $request->getBody()['courseID'];
+            $exist = Course::exist(['course_fk' => $courseID, "student_fk" => $user_id], "course_student");
             $course = Course::findOne(["id" => $courseID]);
-            if($course->is_paid) {
+            $course->user_paid = $exist;
+            $course->id = $courseID;
+            if($course->is_paid && !$course->price == 0 && !$course->user_paid) {
                 $school = School::findOne(["user_fk" => $course->school_fk]);
                 $sellerCode = $school->payment_id;
                 $useSandbox = true;
                 $checkoutOptions = new CheckoutOptions($sellerCode, $useSandbox);
                 $checkoutOptions -> setProcess(CheckoutType::Express);
-                // $checkoutOptions -> setSuccessUrl("/");
-                // $checkoutOptions -> setCancelUrl($cancelUrl);
-                // $checkoutOptions -> setFailureUrl($failureUrl);
-                // $checkoutOptions -> setIPNUrl($ipnUrl);
+                $url = "http://".$_SERVER["HTTP_HOST"]."/paid";
+                $checkoutOptions -> setSuccessUrl($url);
                 $checkoutOptions -> setMerchantOrderId("$user_id-$courseID-$school->user_fk");
                 $checkoutOptions -> setExpiresAfter("2880");
 
@@ -73,6 +74,31 @@ class CourseController extends Controller
             
         }
         $response->redirect("/student");
+    }
+
+    public function paid(Request $request, Response $response)
+    {
+        $course = new Course();
+        $data = $request->getBody();
+        $MerchantOrderId = $data['MerchantOrderId'];
+        $data_list = explode('-', $MerchantOrderId);
+        $user_id = $data_list[0];
+        $courseID = $data_list[1];
+        $exist = Course::exist(['course_fk' => $courseID, "student_fk" => $user_id], "course_student");
+        if(!$exist){
+            $course->addPaidCustomer($user_id, $courseID);
+        }
+        $response->redirect("/takeCourse?courseID=$courseID");
+    }
+
+    public function takeCourse(Request $request, Response $response)
+    {
+        $data = $request->getBody();
+        $courseID = $data['courseID'];
+        $content = Course::findOne(["id" => $courseID]);
+        return $this->render('courseContent', [
+            'model' => $content,
+        ]);
     }
 }
 

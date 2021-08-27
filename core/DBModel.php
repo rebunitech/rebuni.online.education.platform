@@ -78,6 +78,18 @@ abstract class DBModel extends Model
 		$stmt->execute();	
 		return $stmt->fetchObject(static::class);
 	}
+
+	public static function exist($where, $tableName)
+	{
+		$attributes = array_keys($where);
+		$sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+		$stmt = self::prepare("SELECT * FROM $tableName WHERE $sql;");
+		foreach ($where as $key => $value){
+			$stmt->bindValue(":$key", $value);
+		}
+		$stmt->execute();	
+		return $stmt->fetchObject(static::class);
+	}
 	
 	public static function loadRelated($relationTable, $relations)
 	{	

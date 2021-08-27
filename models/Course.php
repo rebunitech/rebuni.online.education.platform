@@ -54,7 +54,7 @@ class Course extends DBModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function save($extra_attribute = [])
 	{
 		$this->school_fk = Application::$app->getUesrId();
@@ -63,5 +63,14 @@ class Course extends DBModel
         echo var_dump($this);
 		return parent::save($extra_attribute);
 	}
+
+    public function addPaidCustomer($userID, $courseID)
+    {
+        $stmt = $this->prepare("INSERT INTO course_student (student_fk, course_fk, paid) VALUES (:userID, :courseID, 1)");
+        $stmt->bindValue(":userID", $userID);
+        $stmt->bindValue(":courseID", $courseID);
+        $stmt->execute();
+        return true;
+    }
 }
 ?>

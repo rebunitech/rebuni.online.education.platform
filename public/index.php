@@ -48,5 +48,8 @@ $app->router->get('/courses', [CourseController::class, 'listCourse']);
 $app->router->get('/addcourse', [CourseController::class, 'addCourse']);
 $app->router->post('/addcourse', [CourseController::class, 'addCourse']);
 $app->router->get('/viewcourse', [CourseController::class, 'viewCourse']);
+$app->router->get('/paid', [CourseController::class, 'paid']);
+$app->router->get('/takeCourse', [CourseController::class, 'takeCourse']);
+
 $app->run();
 ?>
