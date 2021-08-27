@@ -53,7 +53,6 @@ class RegisterUser extends DBModel
 
 	public function save($extra_attribute = [])
 	{
-
 		$this->password = password_hash($this->password, PASSWORD_DEFAULT);
 		return parent::save($extra_attribute);
 	}

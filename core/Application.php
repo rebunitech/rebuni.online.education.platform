@@ -40,9 +40,7 @@ class Application
 	{
 		$this->controller = $controller;
 	}
-	public function run(){
-		echo $this->router->resolve();
-	}
+
 	public function getUserType()
 	{
 		return $this->session->getAuthSession("user_type");
@@ -51,6 +49,10 @@ class Application
 	public function getUesrId()
 	{
 		return $this->session->getAuthSession("user_id");
+	}
+	
+	public function run(){
+		echo $this->router->resolve();
 	}
 }
 ?>
