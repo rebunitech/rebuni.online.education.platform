@@ -16,6 +16,8 @@ class Student extends User
     {
         return ['first_name', 'last_name', 'email', 'username', 'date_of_birth'];
     }
+
+ 
 }
 
 ?>

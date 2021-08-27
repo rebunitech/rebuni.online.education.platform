@@ -29,7 +29,7 @@ abstract class User extends DBModel
 
     public function loadData($data)
     {
-        $this->user_fk = Application::$app->getUesrId();
+        $this->user_fk = Application::$app->getUesrId() ?? 0;
         parent::loadData($data);
     }
 

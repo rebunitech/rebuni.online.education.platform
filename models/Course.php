@@ -10,8 +10,9 @@ class Course extends DBModel
 {
     public int $school_fk;
     public string $title = '';
-    public bool $is_paid = false;
-    public ?float $price;
+    public ?string $description = '';
+    public int $is_paid = 0;
+    public ?float $price = 0.0;
 
     public function tableName(): string
     {
@@ -25,8 +26,19 @@ class Course extends DBModel
 
     public function attributes(): array
     {
-        return ['school_fk', 'title', 'is_paid', 'price'];
+        return ['school_fk', 'title', 'description', 'is_paid', 'price'];
     }
+
+    public function labels(): array
+    {
+        return [
+            'title' => 'Title',
+            'is_paid' => 'Is Paid',
+            'price' => 'Price',
+            'description' => 'Description'
+        ];   
+    }
+
 
     public function loadCourses()
     {
@@ -35,5 +47,21 @@ class Course extends DBModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function listCourse()
+    {
+        $stmt = $this->prepare("SELECT * FROM courses");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function save($extra_attribute = [])
+	{
+		$this->school_fk = Application::$app->getUesrId();
+        echo var_dump($this).PHP_EOL;
+        $this->is_paid = $this->is_paid ?? 0;
+        echo var_dump($this);
+		return parent::save($extra_attribute);
+	}
 }
 ?>

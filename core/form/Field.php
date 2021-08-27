@@ -13,7 +13,8 @@ class Field
 	public const TYPE_EMAIL = 'email';
 	public const TYPE_NUMBER = 'number';
 	public const TYPE_CHECKBOX = 'checkbox';
-
+	public const TYPE_DECIMAL = 'decimal';
+	public const TYPE_TEXTAREA = 'textarea';
 
 	public function __construct(Model $model, $attribute, $type='text')
 	{
@@ -26,6 +27,8 @@ class Field
 	{
 		if ($this->type === self::TYPE_CHECKBOX){
 			return $this->getAsCheckbox();
+		} else if ($this->type === self::TYPE_TEXTAREA){
+			return $this->getAsTextarea();
 		}
 		return sprintf('
 		<div class="form-group">
@@ -58,6 +61,27 @@ class Field
 				$this->model->getFirstError($this->attribute)
 			);
 	}
+
+	public function getAsTextarea()
+	{
+		if ($this->type === self::TYPE_CHECKBOX){
+			return $this->getAsCheckbox();
+		}
+		return sprintf('
+		<div class="form-group">
+			<label class="form-control-label" for="id_%s">%s</label>
+			<textarea id="id_%s" name="%s" class="form-control" value="%s"> </textarea>
+			<div class="text-danger m-2">%s</div>
+		</div>', 
+			   $this->attribute,
+			   $this->model->getLabel($this->attribute),
+			   $this->attribute,
+			   $this->attribute,
+			   $this->model->{$this->attribute},
+			   $this->model->getFirstError($this->attribute)
+			);	
+	}
+	
 }
 
 ?>

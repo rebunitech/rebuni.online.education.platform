@@ -21,9 +21,10 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" class="sort" data-sort="name">No</th>
-                            <th scope="col" class="sort" data-sort="name">Name</th>
-                            <th scope="col" class="sort" data-sort="budget">Email</th>
-                            <th scope="col" class="sort" data-sort="status">Phone number</th>
+                            <th scope="col" class="sort" data-sort="name">Title</th>
+                            <th scope="col" class="sort" data-sort="budget">Description</th>
+                            <th scope="col" class="sort" data-sort="budget">Price</th>
+                            <th scope="col" class="sort" data-sort="status">Date create</th>
                             <th scope="col" class="sort" data-sort="status">Action</th>
                         </tr>
                     </thead>
@@ -31,21 +32,20 @@
                         <?php $i = 1;
                         foreach ($model->loadCourses() as $course) : ?>
                             <tr>
-                                <?php echo var_dump($course); ?>
                                 <td>
                                     <?php echo $i++; ?>
                                 </td>
                                 <td>
-                                    <?php echo $school['name']; ?>
+                                    <?php echo $course['title']; ?>
                                 </td>
                                 <td>
-                                    <?php echo $school['email']; ?>
+                                    <?php echo $course['description']; ?>
                                 </td>
                                 <td>
-                                    <?php echo $school['phone_number']; ?>
+                                    <?php echo $course['price']; ?>
                                 </td>
                                 <td>
-                                    <a href="/addrequest?schoolID=<?php echo $school['user_fk']; ?>" class="btn btn-sm btn-success">Send request</a>
+                                    <?php echo $course['date_created']; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

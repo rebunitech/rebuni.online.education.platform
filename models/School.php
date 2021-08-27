@@ -16,6 +16,7 @@ class School extends DBModel
 	public string $state = '';
 	public string $is_open = '';
 	public string $date_registerd = '';
+	public string $payment_id = '';
 
 	public function tableName(): string
 	{
@@ -24,11 +25,12 @@ class School extends DBModel
 
 	public function attributes(): array
 	{
-		return ['name', 'email', 'phone_number', 'p_o_box', 'region', 'state', 'user_fk'];
+		return ['name', 'email', 'phone_number', 'p_o_box', 'region', 'state', 'user_fk', 'payment_id'];
 	}
 	public function rules() {
 		return [
 			'name' => [self::RULE_REQUIRED],
+			'payment_id' => [self::RULE_REQUIRED],
 			'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
 			'phone_number' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 10], [self::RULE_MAX, 'max' => 13]]
 		];
@@ -44,6 +46,7 @@ class School extends DBModel
 			'region' => 'Region',	
 			'state' => 'State',	
 			'is_open' => 'Open for join request',
+			'payment_id' => 'Payment ID',
 		];
 	}
 
