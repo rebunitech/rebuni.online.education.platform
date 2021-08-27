@@ -3,29 +3,11 @@
 namespace app\models;
 
 use app\core\Application;
-use app\core\DBModel;
+use app\models\User;
+use PDO;
 
-class Teacher extends DBModel
+class Teacher extends User
 {
-
-    public int $user_fk;
-    public ?string $first_name = '';
-	public ?string $last_name = '';
-	public string $email = '';
-	public string $username = '';
-    public ?string $date_of_birth = '';
-    public string $is_active = '';
-    public string $is_staff = '';
-    public ?string $phone_number = '';
-    public ?string $p_o_box = '';
-    public ?string $region = '';
-    public ?string $state = '';
-
-
-    public function tableName(): string
-    {
-        return 'users';
-    }
 
     public function rules(): array
     {
@@ -37,10 +19,18 @@ class Teacher extends DBModel
         return ['first_name', 'last_name', 'email', 'username', 'date_of_birth'];
     }
 
-    public function load($data)
+    public function joinRequest($school_fk)
     {
-        $this->user_fk = Application::$app->getUesrId();
-        parent::load($data);
+        $lecture_fk = Application::$app->getUesrId();
+        $stmt = $this->prepare("INSERT INTO join_requests (lecture_fk, school_fk) VALUES ($lecture_fk, $school_fk);");
+        $stmt->execute();
+    }
+
+    public function openSchoolList()
+    {
+        $stmt = $this->prepare("SELECT * FROM schools WHERE is_open=1");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

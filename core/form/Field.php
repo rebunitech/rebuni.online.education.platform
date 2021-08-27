@@ -12,6 +12,7 @@ class Field
 	public const TYPE_PASSWORD = 'password';
 	public const TYPE_EMAIL = 'email';
 	public const TYPE_NUMBER = 'number';
+	public const TYPE_CHECKBOX = 'checkbox';
 
 
 	public function __construct(Model $model, $attribute, $type='text')
@@ -23,6 +24,9 @@ class Field
 
 	public function __toString()
 	{
+		if ($this->type === self::TYPE_CHECKBOX){
+			return $this->getAsCheckbox();
+		}
 		return sprintf('
 		<div class="form-group">
 			<label class="form-control-label" for="id_%s">%s</label>
@@ -38,7 +42,22 @@ class Field
 			   $this->model->getFirstError($this->attribute)
 			);	
 	}
-
+	
+	public function getAsCheckbox()
+	{
+		return sprintf('<div class="form-check form-switch">
+					<input class="form-check-input" type="checkbox" id="id_%s" name="%s" value="%s">
+					<label class="form-check-label" for="id_%s">%s</label>
+					<div class="text-danger m-2">%s</div>
+				</div>',
+				$this->attribute,
+				$this->attribute,
+				$this->model->{$this->attribute},
+				$this->attribute,
+				$this->model->getLabel($this->attribute),
+				$this->model->getFirstError($this->attribute)
+			);
+	}
 }
 
 ?>

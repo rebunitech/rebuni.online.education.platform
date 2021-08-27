@@ -13,8 +13,7 @@ class SiteController extends Controller
 	{
 		return $this->render('home');
 	}
-
-	public function dashboadrd(Request $request, Response $response)
+	public function dashboard(Request $request, Response $response)
 	{
 		$user_type = Application::$app->getUserType();
 		if($user_type === 'school')
@@ -28,14 +27,25 @@ class SiteController extends Controller
 			$response->redirect('/student');
 		}
 	}
+	public function profile(Request $request, Response $response)
+	{
+		$user_type = Application::$app->getUserType();
+		if($user_type === 'school')
+		{
+			$response->redirect('/schoolprofile');
+		} else if($user_type === 'teacher')
+		{
+			$response->redirect('/teacherprofile');
+		} else if($user_type === 'student') 
+		{
+			$response->redirect('/studentprofile');
+		}
+	}
 	public function handleContact(Request $request, Response $response)
 	{
 		$body = $request->getBody();
-
-		echo var_dump($body);
 		
 	}
-
 	public function contact(Request $request)
 	{	
 		return $this->render('contact');

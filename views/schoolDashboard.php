@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Students</h5>
-                                <span class="h2 font-weight-bold mb-0">350,897</span>
+                                <span class="h2 font-weight-bold mb-0">2</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -28,19 +28,21 @@
             <div class="col-xl-3 col-md-6 p-2">
                 <div class="card card-stats">
                     <!-- Card body -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Courses</h5>
-                                <span class="h2 font-weight-bold mb-0"><?php echo count($model->courses); ?></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                    <i class="ni ni-books"></i>
+                    <a href="/courses">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Courses</h5>
+                                    <span class="h2 font-weight-bold mb-0"><?php echo count($model->courses); ?></span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class="ni ni-books"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 p-2">
@@ -50,7 +52,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Teachers</h5>
-                                <span class="h2 font-weight-bold mb-0">350,897</span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo count($model->teachers); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -68,7 +70,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Requests</h5>
-                                <span class="h2 font-weight-bold mb-0">2,356</span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo count($model->join_requests); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -81,4 +83,66 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="container-fluid mt-1">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Your join request </h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Light table -->
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="sort" data-sort="name">No</th>
+                            <th scope="col" class="sort" data-sort="name">Teacher</th>
+                            <th scope="col" class="sort" data-sort="budget">Status</th>
+                            <th scope="col" class="sort" data-sort="status">Data requested</th>
+                            <th scope="col" class="sort" data-sort="status">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        <?php $i = 1;
+                        foreach ($model->join_requests as $join_request) : ?>
+                            <tr>
+                                <td>
+                                    <?php echo $i++; ?>
+                                </td>
+                                <td>
+                                    <?php echo $join_request['lecture_fk'] ?>
+                                </td>
+                                <td>
+                                    <?php if ($join_request['stauts'] == 0) : ?>
+                                        PENDING
+                                    <?php elseif ($join_request['stauts'] == 1) : ?>
+                                        ACCEPTED
+                                    <?php else : ?>
+                                        DENIED
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php echo $join_request['date_requests']; ?>
+                                </td>
+                                <td>
+                                    <a href="/approve?appoveID=<?php echo $join_request['lecture_fk']; ?>" class="btn btn-sm btn-success">Approve</a>
+                                    <a href="/denie?denieID=<?php echo $join_request['lecture_fk']; ?>" class="btn btn-sm btn-danger">Denie</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

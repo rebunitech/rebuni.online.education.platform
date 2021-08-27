@@ -26,6 +26,7 @@ abstract class Model
 		}
 	}
 
+
 	public function labels(): array
 	{
 		return [];

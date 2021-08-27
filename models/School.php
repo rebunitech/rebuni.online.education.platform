@@ -43,13 +43,14 @@ class School extends DBModel
 			'p_o_box' => 'P.O.Box',	
 			'region' => 'Region',	
 			'state' => 'State',	
+			'is_open' => 'Open for join request',
 		];
 	}
 
-	public function save()
+	public function save($extra_attribute = [])
 	{
 		$this->user_fk = Application::$app->getUesrId();
-		return parent::save();
+		return parent::save($extra_attribute);
 	}
 }
 

@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
-use app\models\User;
+use app\models\RegisterUser;
 use app\models\LoginUser;
 use app\core\Response;
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
 					$response->redirect('/school');
 				} else if ($user_type === 'teacher'){
 					$response->redirect('/teacher');
-				} else if ($user_type === 'teacher'){
+				} else if ($user_type === 'student'){
 					$response->redirect('/student');
 				}
 				exit;
@@ -44,7 +44,7 @@ class AuthController extends Controller
 
 	public function register(Request $request, Response $response)
 	{
-		$user = new User();
+		$user = new RegisterUser();
 		if ($request->isPost()) {
 			$user->loadData($request->getBody());
 			if ($user->validate() && $user->save()){
