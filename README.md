@@ -7,11 +7,11 @@ Rebuni online education platform (ROEP) is a web based system which aim to conne
 > `git 2.25.1`
 
 ## Steps
-> `git clone git@github.com:RebuniTech/webprogramming-2021.git`
-> cd into webprogramming-2021
-> `composer update`
-> `create .env file`
-> `add database configuration in .env as written in .env.example`
-> `php7.4 migrate.php`
-> cd into public
-> `php7.4 -S localhost:8000`
+* `git clone git@github.com:RebuniTech/webprogramming-2021.git`
+* cd into webprogramming-2021
+* `composer update`
+* `create .env file`
+* `add database configuration in .env as written in .env.example`
+* `php7.4 migrate.php`
+* cd into public
+* `php7.4 -S localhost:8000`
