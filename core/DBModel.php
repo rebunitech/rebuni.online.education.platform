@@ -66,6 +66,7 @@ abstract class DBModel extends Model
 		$stmt->execute();
 		return true;
 	}
+
 	public static function findOne($where)
 	{
 		$tableName = static::tableName();
@@ -101,7 +102,6 @@ abstract class DBModel extends Model
 	
 	public static function prepare($sql)
 	{
-
 		return 	Application::$app->db->pdo->prepare($sql);
 	}
 }

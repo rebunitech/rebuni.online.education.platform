@@ -38,6 +38,11 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <?php echo $form->field($model, 'payment_id'); ?>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-4">
                                 <?php echo $form->field($model, 'p_o_box'); ?>
                             </div>

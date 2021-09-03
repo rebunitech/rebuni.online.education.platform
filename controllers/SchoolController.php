@@ -20,8 +20,8 @@ class SchoolController extends Controller
 		}
 		$school->loadData($exists);
 		$courses = School::loadRelated("courses", ["school_fk" => $school->user_fk]);
-		$teachers = School::loadRelated("join_requests", ["school_fk" => $user_id, 'stauts' => 1]);
-		$join_requests = School::loadRelated("join_requests", ["school_fk" => $user_id, 'stauts' => 0]);
+		$teachers = School::loadRelated("join_requests", ["school_fk" => $user_id, 'status' => 1]);
+		$join_requests = School::loadRelated("join_requests", ["school_fk" => $user_id, 'status' => 0]);
 		$school->courses = $courses;
 		$school->teachers = $teachers;
 		$school->join_requests = $join_requests;
@@ -105,7 +105,7 @@ class SchoolController extends Controller
 	{
 		$approveID = $request->getBody()['appoveID'];
 		$user_id = Application::$app->getUesrId();
-		$stmt = School::prepare("UPDATE join_requests SET stauts=1 WHERE lecture_fk=$approveID AND school_fk=$user_id;");
+		$stmt = School::prepare("UPDATE join_requests SET status=1 WHERE lecture_fk=$approveID AND school_fk=$user_id;");
 		$stmt->execute();
 		$response->redirect('/dashboard');
 	}
@@ -114,8 +114,7 @@ class SchoolController extends Controller
 	{
 		$denieID = $request->getBody()['denieID'];
 		$user_id = Application::$app->getUesrId();
-		echo var_dump($denieID, $user_id);
-		$stmt = School::prepare("UPDATE join_requests SET stauts=2 WHERE lecture_fk=$denieID AND school_fk=$user_id");
+		$stmt = School::prepare("UPDATE join_requests SET status=2 WHERE lecture_fk=$denieID AND school_fk=$user_id");
 		$stmt->execute();
 		$response->redirect('/dashboard');
 	}
